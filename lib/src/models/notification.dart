@@ -24,6 +24,8 @@ class Notification with _$Notification {
   factory Notification.fromDto(api.Notification dto) => Notification(
         id: dto.id,
         code: dto.code,
+        subject: dto.subject,
+        content: dto.content,
         senderId: dto.senderId,
         createTime: dto.createTime.toDateTime(),
         persistent: dto.persistent,

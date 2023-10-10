@@ -10,10 +10,10 @@ _$_Notification _$$_NotificationFromJson(Map<String, dynamic> json) =>
     _$_Notification(
       id: json['id'] as String,
       subject: json['subject'] as String?,
-      content: json['content'] as String?,
+      content: json['content'] ??= 'New Notification',
       code: json['code'] as int,
-      senderId: json['senderId'] as String,
-      createTime: DateTime.parse(json['createTime'] as String),
+      senderId: json['sender_id'] as String,
+      createTime: DateTime.parse(json['create_time'] ??= '1970-01-01'),
       persistent: json['persistent'] as bool,
     );
 
@@ -23,7 +23,7 @@ Map<String, dynamic> _$$_NotificationToJson(_$_Notification instance) =>
       'subject': instance.subject,
       'content': instance.content,
       'code': instance.code,
-      'senderId': instance.senderId,
+      'sender_id': instance.senderId,
       'createTime': instance.createTime.toIso8601String(),
       'persistent': instance.persistent,
     };
