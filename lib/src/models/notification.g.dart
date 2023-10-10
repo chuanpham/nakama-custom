@@ -6,16 +6,23 @@ part of 'notification.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Notification _$$_NotificationFromJson(Map<String, dynamic> json) =>
-    _$_Notification(
-      id: json['id'] as String,
-      subject: json['subject'] as String?,
-      content: json['content'] ??= 'New Notification',
-      code: json['code'] as int,
-      senderId: json['sender_id'] as String,
-      createTime: DateTime.parse(json['create_time'] ??= '1970-01-01'),
-      persistent: json['persistent'] as bool,
-    );
+_$_Notification _$$_NotificationFromJson(Map<String, dynamic> json) {
+  String senderId = '';
+  if (json['sender_id'] != null) senderId = json['sender_id'];
+  if (json['senderId'] != null) senderId = json['senderId'];
+  if (jsonDecode(json['content'])['senderId'] != null) {
+    senderId = jsonDecode(json['content'])['senderId'];
+  }
+  return _$_Notification(
+    id: json['id'] as String,
+    subject: json['subject'] as String?,
+    content: json['content'] ??= 'New Notification',
+    code: json['code'] as int,
+    senderId: senderId,
+    createTime: DateTime.parse(json['create_time'] ??= '1970-01-01'),
+    persistent: json['persistent'] as bool,
+  );
+}
 
 Map<String, dynamic> _$$_NotificationToJson(_$_Notification instance) =>
     <String, dynamic>{
