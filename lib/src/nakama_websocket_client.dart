@@ -9,7 +9,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NakamaWebsocketClient {
   static final _log = Logger('NakamaWebsocketClient');
-  static final Map<String, NakamaWebsocketClient> _clients = {};
+  static final Map<String, NakamaWebsocketClient> clients = {};
 
   /// The host address of the server.
   final String host;
@@ -88,11 +88,11 @@ class NakamaWebsocketClient {
 
   /// Returns the instance with given key.
   static NakamaWebsocketClient instanceFor({required String key}) {
-    if (!_clients.containsKey(key)) {
+    if (!clients.containsKey(key)) {
       throw Exception('$key has not yet been initialized');
     }
 
-    return _clients[key]!;
+    return clients[key]!;
   }
 
   factory NakamaWebsocketClient.init({
@@ -105,12 +105,12 @@ class NakamaWebsocketClient {
     Function(dynamic error)? onError,
   }) {
     // Has the client already been initialized? Then return it.
-    if (_clients.containsKey(key)) {
+    if (clients.containsKey(key)) {
       return instanceFor(key: key);
     }
 
     // Create new and return instance of this.
-    return _clients[key] = NakamaWebsocketClient._(
+    return clients[key] = NakamaWebsocketClient._(
       host: host,
       port: port,
       ssl: ssl,
@@ -146,7 +146,7 @@ class NakamaWebsocketClient {
     _channel.stream.listen(
       _onData,
       onDone: () {
-        _clients.clear();
+        clients.clear();
 
         if (onDone != null) {
           onDone!();
